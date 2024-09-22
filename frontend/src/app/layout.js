@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <nav className="bg-slate-800 text-white p-4 flex justify-between items-center">
-          <span className="font-bold text-xl">Job Board</span>
+          <a href="/" className="font-bold text-xl">Job Board</a>
           <a href="/post_job" className="bg-purple-700 p-2 rounded" >Post Job</a>
         </nav>
         <main className="container m-auto p-5">

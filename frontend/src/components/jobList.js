@@ -1,10 +1,37 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 
-const JobList = ({ jobs }) => {
+const JobList = () => {
+    const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchJobs = async () => {
+          try {
+            const response = await fetch('http://localhost:4000/api/jobs');
+            if (!response.ok) {
+              throw new Error('Failed to fetch jobs');
+            }
+            const data = await response.json();
+            setJobs(data.data);
+          } catch (err) {
+            setError(err.message);
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+    fetchJobs();
+      }, []);
+
+    if (loading) return <p>Loading jobs...</p>;
+    if (error) return <p>Error: {error}</p>;
+
     return (
         <ul>
-            {jobs.map((job, index) => (
-                <li key={index} className="job-item border-b-2 mb-5 py-5 flex flex-col">
+            {jobs.map((job) => (
+                <li key={job.id} className="job-item border-b-2 mb-5 py-5 flex flex-col">
                     <div className="flex justify-between">
                         <h2 className="font-bold text-xl">{job.title}</h2>
                         <span>{job.type}</span>
