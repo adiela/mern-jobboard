@@ -16,7 +16,7 @@ const JobList = ({ jobs }) => {
                     </div>
                     <div className="flex justify-between text-sm text-slate-600 items-end mt-3">
                         <p className="text-sm">Date posted: {job.date}</p>
-                        <a href="#" className="text-sm bg-sky-500 text-white px-2 py-1.5 rounded-md">View Job Details</a>
+                        <a href="#" className="btn text-sm">View Job Details</a>
                     </div>
                     
                 </li>

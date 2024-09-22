@@ -3,5 +3,13 @@
 @tailwind utilities;
 
 .container {
-  max-width: 900px;
+  max-width: 800px;
+}
+
+.input {
+  @apply px-4 py-3 mt-2 rounded border border-gray-400 block w-full;
+}
+
+.btn {
+  @apply bg-sky-500 text-white px-2 py-1.5 rounded-md
 }
