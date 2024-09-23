@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import JobForm from '@/components/jobForm';
-import JobPost from '@/components/JobPost';
+import JobPost from '@/components/jobPost';
 import { useRouter } from 'next/navigation'
 
 
