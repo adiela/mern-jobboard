@@ -18,7 +18,7 @@ export default function JobPage({ params }) {
         setLoading(true);
         const fetchJob = async () => {
           try {
-            const response = await fetch(`http://localhost:4000/api/jobs/${params.id}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/jobs/${params.id}`);
             if (!response.ok) {
               throw new Error('Failed to fetch jobs');
             }
@@ -38,7 +38,7 @@ export default function JobPage({ params }) {
       const deleteJob = async () => {
         setSubmitting(true);
         try {
-          const response = await fetch(`http://localhost:4000/api/jobs/${params.id}`, { method: 'DELETE' });
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/jobs/${params.id}`, { method: 'DELETE' });
           if (!response.ok) {
             throw new Error('Failed to delete job');
           }

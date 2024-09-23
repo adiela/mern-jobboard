@@ -9,7 +9,7 @@ const JobList = () => {
     useEffect(() => {
         const fetchJobs = async () => {
           try {
-            const response = await fetch('http://localhost:4000/api/jobs');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/jobs`);
             if (!response.ok) {
               throw new Error('Failed to fetch jobs');
             }

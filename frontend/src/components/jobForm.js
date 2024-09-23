@@ -24,7 +24,7 @@ export default function JobForm({ editingJob, setEditMode, updateEditingJob }) {
   }
 
   const createJob = async () => {
-    fetch('http://localhost:4000/api/jobs', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/jobs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export default function JobForm({ editingJob, setEditMode, updateEditingJob }) {
     })
     .then(data => {
         alert('Job posted successfully'),
-        router.push(`/jobs/${data.data._id}`)
+        router.push(`${process.env.NEXT_PUBLIC_API_URL}/jobs/${data.data._id}`)
     })
     .catch(err => console.error(err))
     .finally(setSubmitting(false));
@@ -54,7 +54,7 @@ export default function JobForm({ editingJob, setEditMode, updateEditingJob }) {
             changedFields[key] = job[key];
         }
     }
-    fetch(`http://localhost:4000/api/jobs/${editingJob._id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/jobs/${editingJob._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
