@@ -1,8 +1,11 @@
 "use client"
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'
 
-export default function JobForm() {
-  const [job, setJob] = useState({
+
+export default function JobForm({ editingJob, setEditMode, updateEditingJob }) {
+  const router = useRouter();
+  const [job, setJob] = useState(editingJob ? editingJob: {
     title: '',
     description: '',
     company: '',
@@ -10,7 +13,7 @@ export default function JobForm() {
     salary: '',
     type: 'full-time',
   });
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
   function handleOnchange(event) {
@@ -20,39 +23,71 @@ export default function JobForm() {
     });
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch('http://localhost:4000/api/jobs', {
+  const createJob = async () => {
+    fetch('http://localhost:4000/api/jobs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(job),
-      });
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw Error(response.statusText);
+        }
 
-      if (!response.ok) {
-        throw new Error('Failed to create job');
-      }
-      
-      // Reset form fields
-        setJob({
-            title: '',
-            description: '',
-            company: '',
-            location: '',
-            salary: '',
-            type: 'full-time',
-        });
+        return response.json();
+    })
+    .then(data => {
+        alert('Job posted successfully'),
+        router.push(`/jobs/${data.data._id}`)
+    })
+    .catch(err => console.error(err))
+    .finally(setSubmitting(false));
+  }
 
-        alert('Job posted successfully');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  const updateJob = async () => {
+    const changedFields = {};
+
+    for (const key in job) {
+        if (job[key] !== editingJob[key]) {
+            changedFields[key] = job[key];
+        }
+    }
+    fetch(`http://localhost:4000/api/jobs/${editingJob._id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(changedFields),
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw Error(response.statusText);
+        }
+
+        return response.json();
+    })
+    .then(data => {
+        alert('Job edited successfully'),
+        // Update the job in the parent component
+        updateEditingJob(data.data);
+        // Switch off edit mode
+        setEditMode(false);
+    })
+    .catch(err => console.error(err))
+    .finally(setSubmitting(false));
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+
+    if (editingJob) {
+      updateJob();
+    } else {
+      createJob();
     }
   };
 
@@ -83,7 +118,7 @@ export default function JobForm() {
             <label className="input-label">Description:</label>
             <textarea className="input" rows="7" name="description" value={job.description} onChange={(e) => handleOnchange(e)}></textarea>
             
-            <button className="btn mt-5 float-right" type="submit" disabled={loading}>{loading ? 'Posting...' : 'Post Job'}</button>
+            <button className="btn mt-5 float-right" type="submit" disabled={submitting}>{editingJob ? 'Update Job' : 'Post Job'}</button>
         </form>
         {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       </div>
