@@ -23,5 +23,9 @@
 }
 
 .data-label {
-  @apply text-gray-500 text-sm;
+  @apply text-gray-500 text-sm my-1 block;
+}
+
+.data-val {
+  @apply px-4 py-3 mt-1 mb-5 block;
 }
