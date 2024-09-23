@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import Loader from '@/components/loader';
 
 const JobList = () => {
     const [jobs, setJobs] = useState([]);
@@ -25,7 +26,7 @@ const JobList = () => {
     fetchJobs();
       }, []);
 
-    if (loading) return <p>Loading jobs...</p>;
+    if (loading) return <Loader />;
     if (error) return <p>Error: {error}</p>;
 
     return (

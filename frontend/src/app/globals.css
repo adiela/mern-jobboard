@@ -29,3 +29,7 @@
 .data-val {
   @apply px-4 py-3 mt-1 mb-5 block;
 }
+
+.loader-svg {
+  margin: 0 auto;
+}

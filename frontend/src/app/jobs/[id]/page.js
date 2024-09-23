@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import JobForm from '@/components/jobForm';
 import JobPost from '@/components/jobPost';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import Loader from '@/components/loader';
 
 
 export default function JobPage({ params }) {
@@ -53,7 +54,7 @@ export default function JobPage({ params }) {
         }
       };
 
-      if (loading) return <p>Loading job...</p>;
+      if (loading) return <Loader />;
 
   return (
       <div>
