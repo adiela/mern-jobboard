@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 4000;
 app.use(cors())
 app.use(express.json()); // allows us to accept JSON data in the req.body
 
-app.use("/api/jobs", jobRoutes);
+app.use("/jobs", jobRoutes);
 
 app.get('/', (req, res) => {
     res.send('Server is live!');
