@@ -27,7 +27,7 @@ const JobList = () => {
       }, []);
 
     if (loading) return <Loader />;
-    if (error) return <p>Error: {error}</p>;
+    if (error) return <p>Error loading jobs posts</p>;
 
     return (
         <ul>
