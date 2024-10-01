@@ -43,7 +43,7 @@ const JobList = () => {
                         <p><strong>Location:</strong> {job.location}</p>
                     </div>
                     <div className="flex justify-between text-sm text-slate-600 items-end mt-3">
-                        <p className="text-sm">Date posted: {job.date}</p>
+                        <p className="text-sm">Date posted: {job.createdAt}</p>
                         <a href={`/jobs/${job._id}`} className="btn text-sm">View Job Details</a>
                     </div>
                     
